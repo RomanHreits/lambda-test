@@ -12,10 +12,15 @@ export interface Pair {
     tokens?: Token[];
 }
 
-export interface AssetsConfigInterface {
-    coinAddress: string;
-    name: string;
+export interface Asset {
+    id: number;
+    address: string;
+    name: number;
     symbol: string;
     decimals: number;
+}
+
+export interface AssetConfig {
+    asset: Asset;
     pairs: Pair[];
 }

@@ -1,13 +1,13 @@
-import {AssetsConfigInterface} from "./interfaces";
+import {AssetConfig, Pair} from "./interfaces";
 import {MultiCallBsc} from "./chain/multicall/multicallbsc";
 import {deriveBNBPrice} from "./util";
 
 export class TokenPriceService {
-    async getTokensPrices(assetsConfigs: AssetsConfigInterface[]) {
+    async getTokensPrices(assetsConfigs: AssetConfig[]) {
         const multiCall = new MultiCallBsc();
         const uniquePairsAddresses = new Set<string>();
         assetsConfigs.forEach(config => {
-            config.pairs?.forEach(pair => uniquePairsAddresses.add(pair.address));
+            config.pairs?.forEach((pair: Pair) => uniquePairsAddresses.add(pair.address));
         });
 
         const addressesArray = Array.from(uniquePairsAddresses);
@@ -15,7 +15,8 @@ export class TokenPriceService {
             multiCall.getTotalSupplies(addressesArray),
         ]);
 
-        const result = deriveBNBPrice(assetsConfigs, pairsReserves.reserves);
-        console.log(result);
+        // const result = deriveBNBPrice(assetsConfigs, pairsReserves.reserves);
+        // console.log(result);
+        // TODO return result;
     }
 }

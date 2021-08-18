@@ -1,8 +1,8 @@
 import {TokenPriceService} from "./token.price.service";
-import {getAssetsNewFromBd} from "./db/db.operations";
+import {getAllAssets} from "./db/asset.dao";
+import {AssetConfig} from "./interfaces";
 
 export async function getResult() {
-    const dbData = await getAssetsNewFromBd();
-    const tokenPriceService = new TokenPriceService();
-    return await tokenPriceService.getTokensPrices(dbData);
+    const assets: AssetConfig[] = await getAllAssets();
+    const prices = await new TokenPriceService().getTokensPrices(assets);
 }
